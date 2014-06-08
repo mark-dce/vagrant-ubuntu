@@ -4,16 +4,21 @@
 # http://www.beyondlinux.com/2011/06/29/how-to-automate-virtual-machine-creation-and-runing-on-virtualbox-by-command-line/
 # and patterened after
 # https://github.com/2creatives/vagrant-centos
-
+# models automated seed file from
+# http://blog.dustinkirkland.com/2011/03/ubuntu-server-quick-install-no.html
 
 # Set Variables
 NAME="dce-ubuntu-12.04.4"
 TYPE="Ubuntu_64"
 INSTALLER="./isos/ubuntu-12.04.4-server-amd64.iso"
 GUESTADDITIONS="./isos/VBoxGuestAdditions.iso"
-HDD="${HOME}/VirtualBox VMs/${NAME}/main.vdi"
-HDD_SWAP="${HOME}/VirtualBox VMs/${NAME}/swap.vdi"
-NATNET="10.0.2.0/24"
+SEEDS="./preseed.img"
+VM_HOME="/Users/mark/Documents/workspace/_no_backup/VirtualBox\ VMs"
+# HDD="${HOME}/VirtualBox VMs/${NAME}/main.vdi"
+HDD="${VM_HOME}/${NAME}/main.vdi"
+HDD_SWAP="${VM_HOME}/${NAME}/swap.vdi"
+NATNET="10.0.5.0/24"
+IP=`echo ${NATNET} | sed -nE 's/^([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}).*/\1/p'`
 
 # Create VM and initialize base opitons
 vboxmanage createvm --name $NAME --ostype $TYPE --register
@@ -38,6 +43,7 @@ vboxmanage modifyvm $NAME \
   --bioslogodisplaytime 0 \
   --biosbootmenu disabled
 
+# Create and attach virtual HDs and attach installation media
 VBoxManage createhd --filename "${HDD}" --size 8192
 
 VBoxManage createhd --filename "${HDD_SWAP}" --size 4096
@@ -53,12 +59,21 @@ VBoxManage storageattach ${NAME} \
 VBoxManage storageattach ${NAME} \
     --storagectl SATA --port 3 --type dvddrive --medium "${GUESTADDITIONS}"
 
+# Attach a floppy image with the Ubuntu Seed file
+VBoxManage storagectl ${NAME} \
+    --name FDC --add floppy --portcount 1 --bootable on
+VBoxManage storageattach ${NAME} \
+    --storagectl FDC --port 0 --device 0 --type fdd --medium "${SEEDS}"
+
 # Start up the machine
 VBoxManage startvm ${NAME} --type gui
 
-IP=`echo ${NATNET} | sed -nE 's/^([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}).*/\1/p'`
+# Provide instructions to start automated installation using seed file
+# clear
+echo 'At the boot prompt, add the following boot options ...'
+# echo "ks=http://${IP}.3:8081" # use a kickstart file servered from the host system
+# echo "locale=en_US console-setup/ask_detect=false keyboard-configuration/layoutcode=us" # set default answers that can't easily be preseeded
+echo "auto preseed/file=/floppy/vagrant-hydra.cfg debian/priority=critical" # Use preseed file on floppy image
 
-echo 'At the boot prompt, hit <TAB> and then add:'
-echo " ks=http://${IP}.3:8081"
 
 

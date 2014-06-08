@@ -1,0 +1,2 @@
+Looks like it might make sense to use a single partiton and LVM for intial distribution and then provide instrucitons for how to separate out swap and data volumes using LVM for non-dev deployments. - see http://tldp.org/HOWTO/LVM-HOWTO/anatomy.html
+
