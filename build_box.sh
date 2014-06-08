@@ -16,7 +16,7 @@ SEEDS="./preseed.img"
 VM_HOME="/Users/mark/Documents/workspace/_no_backup/VirtualBox\ VMs"
 # HDD="${HOME}/VirtualBox VMs/${NAME}/main.vdi"
 HDD="${VM_HOME}/${NAME}/main.vdi"
-HDD_SWAP="${VM_HOME}/${NAME}/swap.vdi"
+# HDD_SWAP="${VM_HOME}/${NAME}/swap.vdi"
 NATNET="10.0.5.0/24"
 IP=`echo ${NATNET} | sed -nE 's/^([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}).*/\1/p'`
 
@@ -46,13 +46,13 @@ vboxmanage modifyvm $NAME \
 # Create and attach virtual HDs and attach installation media
 VBoxManage createhd --filename "${HDD}" --size 8192
 
-VBoxManage createhd --filename "${HDD_SWAP}" --size 4096
+# VBoxManage createhd --filename "${HDD_SWAP}" --size 4096
 
 VBoxManage storagectl ${NAME} \
     --name SATA --add sata --portcount 2 --bootable on
 VBoxManage storageattach ${NAME} \
     --storagectl SATA --port 0 --type hdd --medium "${HDD}"
-VBoxManage storageattach ${NAME} \
+# VBoxManage storageattach ${NAME} \
     --storagectl SATA --port 1 --type hdd --medium "${HDD_SWAP}"
 VBoxManage storageattach ${NAME} \
     --storagectl SATA --port 2 --type dvddrive --medium "${INSTALLER}"
@@ -73,7 +73,7 @@ VBoxManage startvm ${NAME} --type gui
 echo 'At the boot prompt, add the following boot options ...'
 # echo "ks=http://${IP}.3:8081" # use a kickstart file servered from the host system
 # echo "locale=en_US console-setup/ask_detect=false keyboard-configuration/layoutcode=us" # set default answers that can't easily be preseeded
-echo "auto preseed/file=/floppy/vagrant-hydra.cfg debian/priority=critical" # Use preseed file on floppy image
+echo "auto locale=en_US console-setup/ask_detect=false keyboard-configuration/layoutcode=us preseed/file=/floppy/vagrant-hydra.cfg debian/priority=critical" # Use preseed file on floppy image
 
 
 
