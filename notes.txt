@@ -1,2 +1,25 @@
 Looks like it might make sense to use a single partiton and LVM for intial distribution and then provide instrucitons for how to separate out swap and data volumes using LVM for non-dev deployments. - see http://tldp.org/HOWTO/LVM-HOWTO/anatomy.html
 
+https://help.ubuntu.com/12.04/installation-guide/powerpc/preseed-contents.html
+To specify the locale as a boot parameter, use locale=en_US
+Setting localization values will only work if you are using initrd preseeding
+
+To specify the keymap as a boot parameter, use console-setup/ask_detect=false keyboard-configuration/layoutcode=us. 
+
+looks like the floppy gets mounted to /media ...
+
+
+Boot Options: locale=en_US console-setup/ask_detect=false keyboard-configuration/layoutcode=us
+
+
+Add post-install instructions
+- Increase RAM if you can
+- Separate out Swap and Data volumes for production use
+
+
+INSTALL STEPS TO AUTOMATE
+- Proxy server selection
+- Software to install (OpenSSH Server)
+- Configure VM port forwarding (SSH, Jetty, Dev HTTP)
+
+

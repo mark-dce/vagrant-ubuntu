@@ -3,7 +3,7 @@
 #  * Documentation: http://bit.ly/uquick-doc 
 
 # Preseeding only locale sets language, country and locale.
-d-i	debian-installer/locale	string en_US.UTF-8
+d-i	debian-installer/locale	string en_US
 d-i	debian-installer/splash boolean false
 d-i	console-setup/ask_detect	boolean false
 d-i	console-setup/layoutcode	string us
@@ -15,6 +15,7 @@ d-i	netcfg/get_gateway	string
 d-i	netcfg/confirm_static	boolean true
 d-i	netcfg/get_hostname string hydra
 d-i	netcfg/get_domain string local
+choose-mirror-bin	mirror/http/proxy	string	
 d-i	partman-auto/method string regular
 d-i	partman-lvm/device_remove_lvm boolean true
 d-i	partman-lvm/confirm boolean true
