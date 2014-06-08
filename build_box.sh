@@ -38,6 +38,10 @@ vboxmanage modifyvm $NAME \
   --nictype2 virtio \
   --nictype3 virtio \
   --nictype4 virtio \
+  --natpf1 "Guest SSH,tcp,,2222,,22" \
+  --natpf1 "Guest Jetty,tcp,,8983,,8983" \
+  --natpf1 "Guest Rails Server,tcp,,3000,,3000" \
+
   --acpi on --ioapic off \
   --chipset piix3 \
   --rtcuseutc on \
@@ -71,5 +75,5 @@ VBoxManage startvm ${NAME} --type gui
 # Provide instructions to start automated installation using seed file
 # clear
 echo 'At the boot prompt, add the following boot options at the beginning of the boot option list ...'
-echo "auto debian/priority=critical locale=en_US console-setup/ask_detect=false keyboard-configuration/layoutcode=us preseed/file=/floppy/hydra.seed" # Use preseed file on floppy image
+echo "auto=true priority=critical file=/floppy/hydra.seed" # Use preseed file on floppy image
 
