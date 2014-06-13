@@ -1,5 +1,5 @@
 #!/bin/sh -e
-echo "Vagrant Setup Starting" >> /var/log/installer/syslog
+echo "Vagrant Setup Starting" 
 
 # Add Vagrant public key
 mkdir -p /home/vagrant/.ssh
@@ -26,3 +26,5 @@ mount /dev/sr1 ./cdrom/
 /bin/sh /media/cdrom/VBoxLinuxAdditions.run
 umount ./cdrom
 rmdir ./cdrom
+
+echo "Vagrant Setup Complete" 
