@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/sh -e
 
 # Based on info from
 # http://www.beyondlinux.com/2011/06/29/how-to-automate-virtual-machine-creation-and-runing-on-virtualbox-by-command-line/
@@ -22,7 +22,8 @@ IP=`echo ${NATNET} | sed -nE 's/^([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}).*/\1/p'`
 hdiutil detach /Volumes/HYDRA-SEED/  # In case we've been here before
 dd if=/dev/zero of=$SEEDS bs=1024 count=1440
 diskutil eraseVolume MS-DOS HYDRA-SEED `hdiutil attach -nomount $SEEDS`
-cp hydra.seed /Volumes/HYDRA-SEED/hydra.seed
+cp hydra.seed /Volumes/HYDRA-SEED/hydra.seed	# Debian Installer seed file
+cp vagrant_setup.sh /Volumes/HYDRA-SEED/vagrant_setup.sh # Vagrant specific setup script, called by seed file
 
 # Create VM and initialize base opitons
 vboxmanage createvm --name $NAME --ostype $TYPE --register

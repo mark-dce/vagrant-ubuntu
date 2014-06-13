@@ -5,21 +5,53 @@ To specify the locale as a boot parameter, use locale=en_US
 Setting localization values will only work if you are using initrd preseeding
 
 To specify the keymap as a boot parameter, use console-setup/ask_detect=false keyboard-configuration/layoutcode=us. 
-
-looks like the floppy gets mounted to /media ...
-
-
 Boot Options: locale=en_US console-setup/ask_detect=false keyboard-configuration/layoutcode=us
+
+auto doesn't seem to be working right now 
+https://help.ubuntu.com/12.04/installation-guide/powerpc/preseed-using.html
+use 'auto=true priority=critical' instead...
+
+CREATE FLOPPY IMAGE UNDER OSX
+dd if=/dev/zero of=preseed.img bs=1024 count=1440
+diskutil eraseVolume MS-DOS HYDRA-SEED `hdiutil attach -nomount preseed.img`
+
+DOWNLOAD PRESEED LATE COMMAND SCRIPT
+d-i preseed/late_command string in-target wget -P /tmp/ $server/script.sh; in-target chmod $+x /tmp/script.sh; in-target /tmp/script.sh
+
+STEPS TO AUTOMATE (Mmanual in current build)
+https://docs.vagrantup.com/v2/boxes/base.html
+https://docs.vagrantup.com/v2/virtualbox/boxes.html
+- make sure sudo password line is at end
+- apt-get update -yq ; apt-get upgrade -yq
+- install guest addtions prereqs
+	apt-get install linux-headers-generic build-essential dkms
+- install guest additions
+    mount /dev/sr1 /media/cdrom/
+	/bin/sh /media/cdrom/VBoxLinuxAdditions.run
+- consider setting no-doc no-ri options - https://rvm.io/gemsets/basics
+- add unzip package
+- add java - sudo apt-get install openjdk-7-jdk
+- git config --global color.ui true (for dev systems) http://git-scm.com/book/en/Customizing-Git-Git-Configuration
+
+VAGRANT TODOs
+add Vagrant public key
+mkdir -p /home/vagrant/.ssh; curl https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub >> /home/vagrant/.ssh/authorized_keys; chmod 0700 /home/vagrant/.ssh/; chmod 0600 /home/vagrant/.ssh/authorized_keys ; chown -R vagrant:vagrant /home/vagrant/.ssh
+
+setup passwordless sudo
+echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > vagrant_passwordless ; sudo chown root:root vagrant_passwordless ; sudo chmod 0440 vagrant_passwordless ; sudo mv vagrant_passwordless /etc/sudoers.d/
+
+turn off sshd dns checks (optional)
+sudo chmod o+w /etc/ssh/sshd_config ; sudo echo 'UseDNS no' >> /etc/ssh/sshd_config ; sudo chmod o-w /etc/ssh/sshd_config 
+
+install VBox Guest Additions
+
+
+
 
 
 Add post-install instructions
 - Increase RAM if you can
 - Separate out Swap and Data volumes for production use
 
-
-INSTALL STEPS TO AUTOMATE
-- Proxy server selection
-- Software to install (OpenSSH Server)
-- Configure VM port forwarding (SSH, Jetty, Dev HTTP)
 
 

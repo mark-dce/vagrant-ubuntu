@@ -43,7 +43,6 @@ d-i	apt-setup/services-select	multiselect security
 d-i	apt-setup/security_host	string security.ubuntu.com
 d-i	apt-setup/security_path	string /ubuntu
 d-i	debian-installer/allow_unauthenticated	string false
-d-i	pkgsel/upgrade	select safe-upgrade
 d-i	pkgsel/language-packs	multiselect 
 d-i	pkgsel/update-policy	select none
 d-i	pkgsel/updatedb	boolean true
@@ -56,7 +55,8 @@ d-i	finish-install/reboot_in_progress	note
 d-i	cdrom-detect/eject	boolean true
 d-i	debian-installer/exit/halt	boolean false
 d-i	debian-installer/exit/poweroff	boolean false
-d-i	pkgsel/include string byobu vim openssh-server
+d-i	pkgsel/upgrade	select full-upgrade
+d-i	pkgsel/include string byobu vim openssh-server linux-headers-generic build-essential dkms
 
 # Suggest LVM by default.
 d-i	partman-auto/init_automatically_partition	string some_device_lvm
@@ -79,3 +79,12 @@ d-i	grub-installer/timeout	string 2
 # Add the network and tasks oem-config steps by default.
 oem-config	oem-config/steps	multiselect language, timezone, keyboard, user, network, tasks
 d-i	base-installer/kernel/altmeta	string lts-saucy
+
+
+# Steps for Vagrant
+# d-i preseed/late_command string in-target /bin/sh /media/floppy/vagrant_setup.sh 
+	
+  
+
+# Steps for Hydra
+# Handle these as part of Ubuntu Build script after box is downloaded and running via Vagrant file or manual setup
