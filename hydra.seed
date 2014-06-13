@@ -82,8 +82,7 @@ d-i	base-installer/kernel/altmeta	string lts-saucy
 
 
 # Steps for Vagrant
-d-i preseed/late_command string echo "1) echo to /target" >> /target/setup.log ; in-target echo "2) in-target echo to /target" >> /target/setup.log ; in-target echo "3) echo to /" >> setup.log ; in-target echo "4) echo to ." >> ./setup.log
-	
+d-i preseed/late_command string echo "1) echo to /target" >> /target/setup.log ; pwd >> /target/setup.log ; in-target echo "2) in-target echo" ; in-target echo "*** ls /media/floppy/floppy0" ; /in-target ls /media/floppy/floppy0 ; in-target echo "*** ls /media/floppy/cdrom" ; in-target ls /media/cdrom ; in-target mount /dev/fd0 ; in-target mount /dev/cdrom ; in-target echo "*** mount+ls /media/floppy/floppy0" ; in-target ls /media/floppy ; in-target echo "*** mount+ls /media/floppy/cdrom" ; in-target ls /media/cdrom 
 	
   
 
