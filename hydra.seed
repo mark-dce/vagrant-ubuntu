@@ -83,12 +83,10 @@ d-i	base-installer/kernel/altmeta	string lts-saucy
 
 # Steps for Vagrant
 d-i preseed/late_command string \
-	echo "*** /media" > /target/vagrant_setup.log ; \
-	ls /media >> /target/vagrant_setup.log ; \
-	echo "*** /media/cdrom" >> /target/vagrant_setup.log ; \
-	ls /media/cdrom >> /target/vagrant_setup.log ; \
-	echo "*** /media/floppy" >> /target/vagrant_setup.log ; \
-	ls /media/floppy >> /target/vagrant_setup.log ; \
-	in-target echo "*** running vagrant_setup script" ; \
-	echo "*** run vagrant_setup.sh" >> /target/vagrant_setup.log ; \
-	in-target echo "*** tried to run vagrant_setup script"   
+	wget https://raw.githubusercontent.com/mark-dce/vagrant-ubuntu/master/vagrant_setup.sh -O /tmp/vagrant_setup.sh ; \
+	/bin/sh /tmp/vagrant_setup.sh ;
+	
+	
+
+# Steps for Hydra
+# Handle these as part of Ubuntu Build script after box is downloaded and running via Vagrant file or manual setup>>>>>>> External Changes
