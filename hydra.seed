@@ -82,7 +82,20 @@ d-i	base-installer/kernel/altmeta	string lts-saucy
 
 
 # Steps for Vagrant
-d-i preseed/late_command string echo "1) echo to /target" >> /target/setup.log ; pwd >> /target/setup.log ; in-target echo "2) in-target echo" ; in-target echo "*** ls /media/floppy/floppy0" ; /in-target ls /media/floppy/floppy0 ; in-target echo "*** ls /media/floppy/cdrom" ; in-target ls /media/cdrom ; in-target mount /dev/fd0 ; in-target mount /dev/cdrom ; in-target echo "*** mount+ls /media/floppy/floppy0" ; in-target ls /media/floppy ; in-target echo "*** mount+ls /media/floppy/cdrom" ; in-target ls /media/cdrom 
+d-i preseed/late_command string /
+	echo "*** /media" >> /target/var/log/installer/vagrant_setup.log ; /
+	ls /media >> /target/var/log/installer/vagrant_setup.log ; /
+	echo "*** /media/cdrom" >> /target/var/log/installer/vagrant_setup.log ; /
+	ls /media/cdrom >> /target/var/log/installer/vagrant_setup.log ; /
+	echo "*** /media/floppy" >> /target/var/log/installer/vagrant_setup.log ; /
+	ls /media/floppy >> /target/var/log/installer/vagrant_setup.log ; /
+	in-target echo "*** running vagrant_setup script" ; /
+	chroot /target ; /
+	echo "*** run vagrant_setup.sh" >> /target/var/log/installer/vagrant_setup.log ; /
+	/bin/sh vagrant_setup.sh >> /target/var/log/installer/vagrant_setup.log ; /
+	in-target echo "*** tried to run vagrant_setup script" 
+	
+
 	
   
 
