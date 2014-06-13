@@ -82,7 +82,18 @@ d-i	base-installer/kernel/altmeta	string lts-saucy
 
 
 # Steps for Vagrant
-# d-i preseed/late_command string in-target /bin/sh /media/floppy/vagrant_setup.sh 
+d-i preseed/late_command string \
+	in-target echo "*** Starting late_command" > /var/log/vagrant_setup.log ; \
+	in-target mount /dev/fd0 >> /var/log/vagrant_setup.log ; \
+	in-target echo "*** Current working directory" >> /var/log/vagrant_setup.log ; \
+	in-target pwd >> /var/log/vagrant_setup.log ; \
+	in-target echo "*** ls /media /media/cdrom /media/floppy" >> /var/log/vagrant_setup.log ; \
+	in-target ls /media >> /var/log/vagrant_setup.log ; \
+	in-target ls /media/cdrom >> /var/log/vagrant_setup.log ; \
+	in-target ls /media/floppy >> /var/log/vagrant_setup.log ; \
+	in-target echo "*** Run vagrant_setup script" /var/log/vagrant_setup.log ; \
+	in-target /bin/sh /media/floppy/vagrant_setup.sh ; \
+	
 	
   
 

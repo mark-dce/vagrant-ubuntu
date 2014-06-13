@@ -11,6 +11,8 @@ auto doesn't seem to be working right now
 https://help.ubuntu.com/12.04/installation-guide/powerpc/preseed-using.html
 use 'auto=true priority=critical' instead...
 
+This was useful: http://users.telenet.be/mydotcom/howto/linux/automatic.htm
+
 CREATE FLOPPY IMAGE UNDER OSX
 dd if=/dev/zero of=preseed.img bs=1024 count=1440
 diskutil eraseVolume MS-DOS HYDRA-SEED `hdiutil attach -nomount preseed.img`
