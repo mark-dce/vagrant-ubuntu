@@ -81,12 +81,5 @@ oem-config	oem-config/steps	multiselect language, timezone, keyboard, user, netw
 d-i	base-installer/kernel/altmeta	string lts-saucy
 
 
-# Steps for Vagrant
-d-i preseed/late_command string \
-	in-target wget https://raw.githubusercontent.com/mark-dce/vagrant-ubuntu/master/vagrant_setup.sh -O /tmp/vagrant_setup.sh ; \
-	in-target /bin/sh /tmp/vagrant_setup.sh ;
-	
-	
-
-# Steps for Hydra
-# Handle these as part of Ubuntu Build script after box is downloaded and running via Vagrant file or manual setup>>>>>>> External Changes
+# Setup for Vagrant
+d-i preseed/late_command string mount /dev/fd0 /media ; cp /media/vagrant_setup.sh /target/tmp ; in-target /tmp/vagrant_setup.sh 

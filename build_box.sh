@@ -75,6 +75,15 @@ VBoxManage startvm ${NAME} --type gui
 
 # Provide instructions to start automated installation using seed file
 # clear
-echo 'At the boot prompt, add the following boot options at the beginning of the boot option list ...'
-echo "auto=true priority=critical file=/floppy/hydra.seed" # Use preseed file on floppy image
+echo 'At the boot prompt, replace the file=/cdrom... boot option with the following:'
+echo 'auto=true priority=critical file=/floppy/hydra.seed' # Use preseed file on floppy image
+echo
+echo 'FINISHING'
+echo 'rm preseed.img'
+echo "vagrant package --base ${NAME}"
+echo "vagrant box add ${NAME} package.box
+echo "vagrant init ${NAME}"
+echo "vagrant up"
+
+
 
