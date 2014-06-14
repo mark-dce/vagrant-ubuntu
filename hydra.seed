@@ -83,8 +83,8 @@ d-i	base-installer/kernel/altmeta	string lts-saucy
 
 # Steps for Vagrant
 d-i preseed/late_command string \
-	wget https://raw.githubusercontent.com/mark-dce/vagrant-ubuntu/master/vagrant_setup.sh -O /tmp/vagrant_setup.sh ; \
-	/bin/sh /tmp/vagrant_setup.sh ;
+	in-target wget https://raw.githubusercontent.com/mark-dce/vagrant-ubuntu/master/vagrant_setup.sh -O /tmp/vagrant_setup.sh ; \
+	in-target /bin/sh /tmp/vagrant_setup.sh ;
 	
 	
 
