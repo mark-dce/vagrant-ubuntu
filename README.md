@@ -53,11 +53,11 @@ configuration to best suit your needs. In particular, take note
 of the location of the ISOs (which aren't include in the git
 repository):
 
-  INSTALLER="./isos/ubuntu-12.04.4-server-amd64.iso"
-  GUESTADDITIONS="./isos/VBoxGuestAdditions.iso"
+  INSTALLER="./isos/ubuntu-12.04.4-server-amd64.iso"  
+  GUESTADDITIONS="./isos/VBoxGuestAdditions.iso"  
 
 Assumptions have been made about the location of the VM location
 as well:
 
-  VM_HOME="${HOME}/Documents/workspace/_no_backup/VirtualBox\ VMs"
+  VM_HOME="${HOME}/Documents/workspace/_no_backup/VirtualBox\ VMs"  
 

@@ -15,11 +15,9 @@ GUESTADDITIONS="./isos/VBoxGuestAdditions.iso"
 SEEDS="./preseed.img"
 VM_HOME="${HOME}/Documents/workspace/_no_backup/VirtualBox\ VMs"
 HDD="${VM_HOME}/${NAME}/main.vdi"
-NATNET="10.0.5.0/24"
-IP=`echo ${NATNET} | sed -nE 's/^([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}).*/\1/p'`
 
 # Build floppy image for configuration preseeding
-hdiutil detach /Volumes/HYDRA-SEED/  # In case we've been here before
+hdiutil detach /Volumes/HYDRA-SEED/ || true # In case we've been here before
 dd if=/dev/zero of=$SEEDS bs=1024 count=1440
 diskutil eraseVolume MS-DOS HYDRA-SEED `hdiutil attach -nomount $SEEDS`
 cp hydra.seed /Volumes/HYDRA-SEED/hydra.seed	# Debian Installer seed file
@@ -43,7 +41,6 @@ vboxmanage modifyvm $NAME \
   --natpf1 "Guest SSH,tcp,,2222,,22" \
   --natpf1 "Guest Jetty,tcp,,8983,,8983" \
   --natpf1 "Guest Rails Server,tcp,,3000,,3000" \
-
   --acpi on --ioapic off \
   --chipset piix3 \
   --rtcuseutc on \
@@ -78,13 +75,14 @@ VBoxManage startvm ${NAME} --type gui
 # clear
 echo
 echo 'INSTALLING'
-echo 'At the boot prompt, replace the file=/cdrom... boot option with the following:'
-echo 'auto=true priority=critical file=/floppy/hydra.seed' # Use preseed file on floppy image
+echo 'Access the installer boot prompt by hitting ESC followed by the F6 key.'
+echo 'At the boot prompt, replace the 'file=/cdrom...' boot option with the following:'
+echo 'file=/floppy/hydra.seed auto=true priority=critical' # Use preseed file on floppy image
 echo
 echo 'FINISHING'
 echo 'rm preseed.img'
 echo "vagrant package --base ${NAME}"
-echo "vagrant box add ${NAME} package.box
+echo "vagrant box add ${NAME} package.box"
 echo "vagrant init ${NAME}"
 echo "vagrant up"
 
