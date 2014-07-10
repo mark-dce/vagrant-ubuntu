@@ -9,8 +9,8 @@ Run:
 
 At the boot prompt press ESC and F6 to gain access to the boot options. 
 You'll get a prompt with a string of boot options. Replace the _file=/cdrom..._ 
-boot option with the following:
-_file=/floppy/hydra.seed' auto=true priority=critical_
+boot option with the following:  
+    _file=/floppy/hydra.seed' auto=true priority=critical_
 
 The rest of the installation is automated. The Ubuntu server installation will
 proceed unattended. Once the installation is complete, follow the instructions 
@@ -53,11 +53,11 @@ configuration to best suit your needs. In particular, take note
 of the location of the ISOs (which aren't include in the git
 repository):
 
-  INSTALLER="./isos/ubuntu-12.04.4-server-amd64.iso"  
-  GUESTADDITIONS="./isos/VBoxGuestAdditions.iso"  
+    INSTALLER="./isos/ubuntu-12.04.4-server-amd64.iso"  
+    GUESTADDITIONS="./isos/VBoxGuestAdditions.iso"  
 
 Assumptions have been made about the location of the VM location
 as well:
 
-  VM_HOME="${HOME}/Documents/workspace/_no_backup/VirtualBox\ VMs"  
+    VM_HOME="${HOME}/Documents/workspace/_no_backup/VirtualBox\ VMs"  
 
