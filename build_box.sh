@@ -34,6 +34,7 @@ vboxmanage modifyvm $NAME \
   --memory 512 \
   --usb off \
   --audio none \
+  --clipboard bidirectional \
   --boot1 disk --boot2 dvd --boot3 none --boot4 none \
   --nictype1 virtio --nic1 nat --natnet1 "${NATNET}" \
   --nictype2 virtio \
@@ -75,6 +76,8 @@ VBoxManage startvm ${NAME} --type gui
 
 # Provide instructions to start automated installation using seed file
 # clear
+echo
+echo 'INSTALLING'
 echo 'At the boot prompt, replace the file=/cdrom... boot option with the following:'
 echo 'auto=true priority=critical file=/floppy/hydra.seed' # Use preseed file on floppy image
 echo

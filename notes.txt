@@ -1,5 +1,12 @@
 Looks like it might make sense to use a single partiton and LVM for intial distribution and then provide instrucitons for how to separate out swap and data volumes using LVM for non-dev deployments. - see http://tldp.org/HOWTO/LVM-HOWTO/anatomy.html
 
+PRESEED ENVIRONMENT NOTES
+/target = root of the system being installed
+in-target runs commands in the context of the target install syste - output logged to /var/log/installer/syslog
+commands not run 'in-target' context run in a temporary installer root, command output can be redirected to log files
+separate d-i preseed/late_command string in-target apt-get update ; \ <- command need ;  line breaks need \
+
+
 https://help.ubuntu.com/12.04/installation-guide/powerpc/preseed-contents.html
 To specify the locale as a boot parameter, use locale=en_US
 Setting localization values will only work if you are using initrd preseeding
