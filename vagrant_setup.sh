@@ -1,6 +1,9 @@
 #!/bin/sh -e
 echo "Vagrant Setup Starting" 
 
+# Update Ubuntu
+apt-get update -y && apt-get upgrade -y
+
 # Add Vagrant public key
 mkdir -p /home/vagrant/.ssh
 curl -s -o /home/vagrant/.ssh/authorized_keys https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub

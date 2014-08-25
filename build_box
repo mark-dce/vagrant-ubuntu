@@ -10,7 +10,7 @@
 # Set Variables
 NAME="dce-ubuntu-12.04.4"
 TYPE="Ubuntu_64"
-INSTALLER="./isos/ubuntu-12.04.4-server-amd64.iso"
+INSTALLER="./isos/ubuntu-14.04.1-server-amd64.iso"
 GUESTADDITIONS="./isos/VBoxGuestAdditions.iso"
 SEEDS="./preseed.img"
 VM_HOME="${HOME}/Documents/workspace/_no_backup/VirtualBox\ VMs"
@@ -81,6 +81,8 @@ echo 'file=/floppy/hydra.seed auto=true priority=critical' # Use preseed file on
 echo
 echo 'FINISHING'
 echo 'rm preseed.img'
+echo "VBoxManage storagectl ${NAME} --remove --name FDC"
+echo "VBoxManage storageattach ${NAME} --storagectl SATA --port 3 --device 0 --medium emptydrive"
 echo "vagrant package --base ${NAME}"
 echo "vagrant box add ${NAME} package.box"
 echo "vagrant init ${NAME}"
