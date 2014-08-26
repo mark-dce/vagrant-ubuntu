@@ -1,4 +1,4 @@
-vagrant-centos
+vagrant-ubuntu
 ==============
 
 Scripts to create a lean Ubuntu Vagrant box as a base for Hydra builds.
@@ -49,8 +49,8 @@ This system is very bare-bones with just enough configuration to
 function as a Vagrant box. The intent is to provide a consistent
 clean base to run additional Hydra deployment scripts against. 
 
-You are encouraged to look at the file `vars.sh` to modify the
-configuration to best suit your needs. In particular, take note
+You are encouraged to look at the ./build_box.sh #variables section to 
+modify the configuration to best suit your needs. In particular, take note
 of the location of the ISOs (which aren't include in the git
 repository):
 
@@ -60,5 +60,7 @@ repository):
 Assumptions have been made about the location of the VM location
 as well:
 
-    VM_HOME="${HOME}/Documents/workspace/_no_backup/VirtualBox\ VMs"  
+    VM_HOME="${HOME}/Documents/workspace/_no_backup/VirtualBox VMs"
+
+This will probably need to be changed to match your local directory convention.  
 

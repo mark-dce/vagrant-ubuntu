@@ -8,12 +8,12 @@
 # http://blog.dustinkirkland.com/2011/03/ubuntu-server-quick-install-no.html
 
 # Set Variables
-NAME="dce-ubuntu-12.04.4"
+NAME="dce-trusty"
 TYPE="Ubuntu_64"
 INSTALLER="./isos/ubuntu-14.04.1-server-amd64.iso"
 GUESTADDITIONS="./isos/VBoxGuestAdditions.iso"
 SEEDS="./preseed.img"
-VM_HOME="${HOME}/Documents/workspace/_no_backup/VirtualBox\ VMs"
+VM_HOME="${HOME}/Documents/workspace/_no_backup/VirtualBox VMs"
 HDD="${VM_HOME}/${NAME}/main.vdi"
 
 # Build floppy image for configuration preseeding
@@ -87,6 +87,4 @@ echo "vagrant package --base ${NAME}"
 echo "vagrant box add ${NAME} package.box"
 echo "vagrant init ${NAME}"
 echo "vagrant up"
-
-
 
