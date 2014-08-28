@@ -5,32 +5,25 @@ Scripts to create a lean Ubuntu Vagrant box as a base for Hydra builds.
 
 Run:
 
-```
-  ./build_box
-```
+    ./build_box
 
 At the boot prompt press ESC and F6 to gain access to the boot options. 
 You'll get a prompt with a string of boot options. Replace the `file=/cdrom...`
 boot option with the following:  
 
-    `file=/floppy/hydra.seed auto=true priority=critical`
+    file=/floppy/hydra.seed auto=true priority=critical
 
 The rest of the installation is automated. The Ubuntu server installation will
 proceed unattended. 
 
-Once the installation is complete, and you have a login promt in the VM window,
-create a vagrant package by running:
-
-```
-  ./package_box
-```
+Once the installation is complete, press [Enter] to shut down the VM prior to 
+packaging. Press [Enter] again once the VM is fully shut down to complete the
+vagrant packaging process.
 
 Congratulations! You have just created a Vagrant box.  You can connect to your box 
 using the following command:
 
-```
-   vagrant ssh
-```
+    vagrant ssh
 
 
 Specifications
