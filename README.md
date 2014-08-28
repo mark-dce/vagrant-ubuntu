@@ -1,29 +1,42 @@
-vagrant-centos
+vagrant-ubuntu
 ==============
 
 Scripts to create a lean Ubuntu Vagrant box as a base for Hydra builds.
 
 Run:
 
+```
   ./build_box
+```
 
 At the boot prompt press ESC and F6 to gain access to the boot options. 
 You'll get a prompt with a string of boot options. Replace the `file=/cdrom...`
 boot option with the following:  
 
-    file=/floppy/hydra.seed auto=true priority=critical
+    `file=/floppy/hydra.seed auto=true priority=critical`
 
 The rest of the installation is automated. The Ubuntu server installation will
-proceed unattended. Once the installation is complete, follow the instructions 
-printed out under "FINISHING" to package you VM into a Vagrant box
+proceed unattended. 
 
-Congratulations! You have just created a Vagrant box.
+Once the installation is complete, and you have a login promt in the VM window,
+create a vagrant package by running:
+
+```
+  ./package_box
+```
+
+Congratulations! You have just created a Vagrant box.  You can connect to your box 
+using the following command:
+
+```
+   vagrant ssh
+```
 
 
-Specification
--------------
+Specifications
+--------------
 
-The box is constrained to 613 MiB of memory to vaguely resemble an
+The box is constrained to 512 MB of memory to vaguely resemble an
 Amazon AWS micro instance. You may want to consider adjusting this
 for your needs using options like:
 
@@ -49,16 +62,18 @@ This system is very bare-bones with just enough configuration to
 function as a Vagrant box. The intent is to provide a consistent
 clean base to run additional Hydra deployment scripts against. 
 
-You are encouraged to look at the file `vars.sh` to modify the
-configuration to best suit your needs. In particular, take note
-of the location of the ISOs (which aren't include in the git
-repository):
+You are encouraged to look at *#Set Variables* section of the 
+*build_box* script to modify the configuration to best suit your needs. 
+In particular, take note of the location of the ISOs (which are not 
+included in the git repository):
 
-    INSTALLER="./isos/ubuntu-12.04.4-server-amd64.iso"  
+    INSTALLER="./isos/ubuntu-12.04.5-server-amd64.iso"  
     GUESTADDITIONS="./isos/VBoxGuestAdditions.iso"  
 
-Assumptions have been made about the location of the VM location
+Assumptions have been made about the location of the VM folder
 as well:
 
-    VM_HOME="${HOME}/Documents/workspace/_no_backup/VirtualBox\ VMs"  
+    VM_HOME="${HOME}/Documents/workspace/_no_backup/VirtualBox VMs"  
+	
+Please change this to reflect the configuration on your local system.
 

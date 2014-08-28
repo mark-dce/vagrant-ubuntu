@@ -1,3 +1,8 @@
 /isos
 /boxes
+
+# Vagrant files
+.vagrant/
+Vagrantfile
+dce-precise.box
 preseed.img

@@ -8,12 +8,12 @@
 # http://blog.dustinkirkland.com/2011/03/ubuntu-server-quick-install-no.html
 
 # Set Variables
-NAME="dce-ubuntu-12.04.4"
+NAME="dce-precise"
 TYPE="Ubuntu_64"
-INSTALLER="./isos/ubuntu-12.04.4-server-amd64.iso"
+INSTALLER="./isos/ubuntu-12.04.5-server-amd64.iso"
 GUESTADDITIONS="./isos/VBoxGuestAdditions.iso"
 SEEDS="./preseed.img"
-VM_HOME="${HOME}/Documents/workspace/_no_backup/VirtualBox\ VMs"
+VM_HOME="${HOME}/Documents/workspace/_no_backup/VirtualBox VMs"
 HDD="${VM_HOME}/${NAME}/main.vdi"
 
 # Build floppy image for configuration preseeding
@@ -79,12 +79,27 @@ echo 'Access the installer boot prompt by hitting ESC followed by the F6 key.'
 echo 'At the boot prompt, replace the 'file=/cdrom...' boot option with the following:'
 echo 'file=/floppy/hydra.seed auto=true priority=critical' # Use preseed file on floppy image
 echo
-echo 'FINISHING'
-echo 'rm preseed.img'
-echo "vagrant package --base ${NAME}"
-echo "vagrant box add ${NAME} package.box"
-echo "vagrant init ${NAME}"
-echo "vagrant up"
+
+# Shutdown VM and remove floppy image
+read -p "Press [Enter] once the installation is complete and the VM has rebooted"
+echo "Stopping VM..."
+vboxmanage controlvm dce-precise acpipowerbutton
+
+read -p "Press [Enter] once the VM is completely shut down"
+vboxmanage storageattach $NAME --storagectl FDC --device 0 --medium none
+vboxmanage closemedium floppy preseed.img --delete
+
+# Remove any previous versions of the vagrant files
+rm -f $NAME.box
+rm -f Vagrantfile
+
+# Package and start the Vagrant box
+vagrant package --base $NAME --output $NAME.box
+vagrant box add $NAME $NAME.box --force
+vagrant init $NAME
+vagrant up
+echo "PACKAGING COMPLETE"
+echo "vagrant ssh # to connect"
 
 
 
