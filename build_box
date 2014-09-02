@@ -51,7 +51,7 @@ vboxmanage modifyvm $NAME \
   --biosbootmenu disabled
 
 # Create and attach virtual HDs and attach installation media
-VBoxManage createhd --filename "${HDD}" --size 8192
+VBoxManage createhd --filename "${HDD}" --size 16384
 
 VBoxManage storagectl ${NAME} \
     --name SATA --add sata --portcount 2 --bootable on

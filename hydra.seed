@@ -63,7 +63,7 @@ d-i	passwd/user-default-groups string adm cdrom dialout lpadmin plugdev sambasha
 # Use defaults for update service settings and mirrors.
 
 ### Package selection
-tasksel tasksel/first multiselect OpenSSH server, LAMP server, Tomcat Java server
+tasksel tasksel/first multiselect
 tasksel	tasksel/force-tasks	string server
 
 # Individual additional packages to install
