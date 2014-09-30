@@ -82,12 +82,18 @@ echo
 
 # Shutdown VM and remove floppy image
 read -p "Press [Enter] once the installation is complete and the VM has rebooted"
-echo "Stopping VM..."
-vboxmanage controlvm dce-precise acpipowerbutton
+# echo "Zero-ing unused disk space..."
+# ssh vagrant@localhost -p 2222 -i ~/.vagrant.d/insecure_private_key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o PasswordAuthentication=no -o IdentitiesOnly=yes "bash -s" < zero.sh
+# echo "The VM will shutdown after this step."
+# 2014-09-29 MHB - mount the main.vdi on another machine an use zerofree to reclaim more space
+vboxmanage controlvm $NAME acpipowerbutton
 
 read -p "Press [Enter] once the VM is completely shut down"
 vboxmanage storageattach $NAME --storagectl FDC --device 0 --medium none
 vboxmanage closemedium floppy preseed.img --delete
+VBoxManage storagectl ${NAME} --name FDC --remove
+VBoxManage storageattach $NAME --storagectl SATA --port 2 --medium none
+VBoxManage storageattach $NAME --storagectl SATA --port 3 --medium none
 
 # Remove any previous versions of the vagrant files
 rm -f $NAME.box
@@ -97,9 +103,8 @@ rm -f Vagrantfile
 vagrant package --base $NAME --output $NAME.box
 vagrant box add $NAME $NAME.box --force
 vagrant init $NAME
-vagrant up
 echo "PACKAGING COMPLETE"
-echo "vagrant ssh # to connect"
+echo "vagrant up ; vagrant ssh # to connect"
 
 
 

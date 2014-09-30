@@ -54,13 +54,24 @@ sudo chmod o+w /etc/ssh/sshd_config ; sudo echo 'UseDNS no' >> /etc/ssh/sshd_con
 
 install VBox Guest Additions
 
+VBoxManage storageattach $NAME --storagectl SATA --port 3 --medium none
 
+ssh vagrant@localhost -p 2222 -i ~/.vagrant.d/insecure_private_key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o PasswordAuthentication=no -o IdentitiesOnly=yes
+
+Need to run zero.sh as root
+
+Base box
+Camper with base box | ubuntu server
+Camper appliance - auth?
 
 
 
 Add post-install instructions
 - Increase RAM if you can
 - Separate out Swap and Data volumes for production use
+
+Build w/ rails 4.1.6
+Build w/ worthwhile - gem install worthwhile
 
 
 
