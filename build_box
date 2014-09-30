@@ -88,6 +88,9 @@ vboxmanage controlvm dce-precise acpipowerbutton
 read -p "Press [Enter] once the VM is completely shut down"
 vboxmanage storageattach $NAME --storagectl FDC --device 0 --medium none
 vboxmanage closemedium floppy preseed.img --delete
+VBoxManage storagectl $NAME --name FDC --remove
+VBoxManage storageattach $NAME --storagectl SATA --port 2 --medium none
+VBoxManage storageattach $NAME --storagectl SATA --port 3 --medium none
 
 # Remove any previous versions of the vagrant files
 rm -f $NAME.box
@@ -97,9 +100,8 @@ rm -f Vagrantfile
 vagrant package --base $NAME --output $NAME.box
 vagrant box add $NAME $NAME.box --force
 vagrant init $NAME
-vagrant up
 echo "PACKAGING COMPLETE"
-echo "vagrant ssh # to connect"
+echo "vagrant up ; vagrant ssh # to connect"
 
 
 
